@@ -17,7 +17,12 @@ FLINK=$(CLINK)
 # compile flags for GCC, baseline single-threaded, double precision case...
 # Notes: 1) -Ofast breaks isfinite() & isnan(), so use -O3 which now is as fast
 #        2) -fcx-limited-range for fortran-speed complex arith in C++
-CFLAGS   = -fPIC -O3 -funroll-loops -march=native -fcx-limited-range
+ifeq ($(findstring ppc64le,$(shell uname -p)),ppc64le)
+MARCH_FLAG ?= -mcpu=native
+else
+MARCH_FLAG ?= -march=native
+endif
+CFLAGS   = -fPIC -O3 -funroll-loops $(MARCH_FLAG) -fcx-limited-range
 # tell examples where to find header files...
 CFLAGS   += -I src
 FFLAGS   = $(CFLAGS)
