@@ -9,8 +9,8 @@
 # See docs/install.rst, and make.inc.*
 
 # compilers, and linking from C, fortran...
-CXX=CC
-CC=cc
+CXX?=g++
+CC?=gcc
 FC=gfortran
 CLINK=-lstdc++
 FLINK=$(CLINK)

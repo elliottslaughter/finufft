@@ -15,8 +15,10 @@ import setuptools
 import os
 
 # choose your compilers here (eg gcc-8, g++-8). Should match make.inc
-os.environ["CC"] = "cc"
-os.environ["CXX"] = "CC"
+if "CC" not in os.environ:
+    os.environ["CC"] = "gcc"
+if "CXX" not in os.environ:
+    os.environ["CXX"] = "CC"
 
 class get_pybind_include(object):
     """Helper class to determine the pybind11 include path
