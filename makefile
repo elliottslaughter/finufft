@@ -22,7 +22,12 @@ MARCH_FLAG ?= -mcpu=native
 else
 MARCH_FLAG ?= -march=native
 endif
-CFLAGS   = -fPIC -O3 -funroll-loops $(MARCH_FLAG) -fcx-limited-range
+ifeq ($(findstring clang,$(CXX)),clang)
+OPT_FLAGS ?=
+else
+OPT_FLAGS ?= -fcx-limited-range
+endif
+CFLAGS   = -fPIC -O3 -funroll-loops $(MARCH_FLAG) $(OPT_FLAGS)
 # tell examples where to find header files...
 CFLAGS   += -I src
 FFLAGS   = $(CFLAGS)
